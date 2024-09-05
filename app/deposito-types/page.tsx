@@ -14,3 +14,4 @@ const DepositoPage = async () => {
 };
 
 export default DepositoPage;
+export const dynamic = "force-dynamic";

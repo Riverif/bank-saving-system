@@ -7,34 +7,38 @@ import { Loader } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
-export const Customers = () => {
+interface CustomersProps {
+  customers: Customer[];
+}
+
+export const Customers = ({ customers }: CustomersProps) => {
   const router = useRouter();
 
-  const [data, setData] = useState<Customer[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  // const [data, setData] = useState<Customer[]>([]);
+  // const [loading, setLoading] = useState(true);
+  // const [error, setError] = useState(null);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get("/api/customers");
-        setData(response.data);
-      } catch (err: any) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await axios.get("/api/customers");
+  //       setData(response.data);
+  //     } catch (err: any) {
+  //       setError(err.message);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
 
-    fetchData();
-  }, [router]);
+  //   fetchData();
+  // }, [router]);
 
   return (
     <div className="space-y-2">
       <p className="text-center">choose customer</p>
       <div className="flex flex-wrap gap-4  max-w-[800px] justify-center">
-        {!loading ? (
-          data.map((customer) => (
+        {customers ? (
+          customers.map((customer) => (
             <Button
               key={customer.id}
               variant="secondary"
