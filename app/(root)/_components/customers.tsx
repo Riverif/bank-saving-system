@@ -7,10 +7,7 @@ import { Loader } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
-interface CustomersProps {
-  customers: Customer[];
-}
-export const Customers = ({ customers }: CustomersProps) => {
+export const Customers = () => {
   const router = useRouter();
 
   const [data, setData] = useState<Customer[]>([]);
@@ -30,13 +27,13 @@ export const Customers = ({ customers }: CustomersProps) => {
     };
 
     fetchData();
-  }, []);
+  }, [router]);
 
   return (
     <div className="space-y-2">
       <p className="text-center">choose customer</p>
       <div className="flex flex-wrap gap-4  max-w-[800px] justify-center">
-        {data ? (
+        {!loading ? (
           data.map((customer) => (
             <Button
               key={customer.id}

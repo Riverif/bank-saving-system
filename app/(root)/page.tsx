@@ -3,8 +3,6 @@ import { RegisterCustomer } from "./_components/register-customer";
 import { Customers } from "./_components/customers";
 
 export default async function Home() {
-  const customers = await db.customer.findMany();
-
   return (
     <main className="min-h-screen flex flex-col items-center justify-center space-y-16 md:p-0 p-4">
       <div className="space-y-3 flex flex-col items-center text-center">
@@ -14,7 +12,7 @@ export default async function Home() {
         <p className="text-green-c">created by Rifki Alfian Nahar</p>
       </div>
       <RegisterCustomer />
-      <Customers customers={customers} />
+      <Customers />
     </main>
   );
 }
