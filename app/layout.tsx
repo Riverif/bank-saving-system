@@ -4,6 +4,9 @@ import { Raleway as FontSans } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 
+import { Toaster } from "react-hot-toast";
+import { NavDeposito } from "@/components/nav-deposito";
+
 const fontSans = FontSans({
   subsets: ["latin"],
   variable: "--font-sans",
@@ -28,7 +31,9 @@ export default function RootLayout({
           fontSans.variable,
         )}
       >
+        <NavDeposito />
         {children}
+        <Toaster />
       </body>
     </html>
   );

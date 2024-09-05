@@ -4,6 +4,8 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
+import axios, { AxiosError } from "axios";
+
 import { CustomerSchema } from "@/schemas";
 
 import { Button } from "@/components/ui/button";
@@ -18,8 +20,11 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 export const RegisterCustomer = () => {
+  const router = useRouter();
   const form = useForm<z.infer<typeof CustomerSchema>>({
     resolver: zodResolver(CustomerSchema),
     defaultValues: {
@@ -27,8 +32,21 @@ export const RegisterCustomer = () => {
     },
   });
 
-  const onSubmit = (values: z.infer<typeof CustomerSchema>) => {
-    console.log(values.name);
+  const onSubmit = async (values: z.infer<typeof CustomerSchema>) => {
+    try {
+      await axios.post("/api/customers", values);
+      toast.success("Customer Registered");
+      router.refresh();
+    } catch (error) {
+      if (
+        error instanceof AxiosError &&
+        error.response?.data === "Name was taken"
+      ) {
+        toast.error("Name was taken");
+      } else {
+        toast.error("Something went wrong");
+      }
+    }
   };
 
   return (
@@ -44,13 +62,14 @@ export const RegisterCustomer = () => {
                   {...field}
                   placeholder="Create customer"
                   className="border-black"
+                  type="text"
                 />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-        <Button>Register</Button>
+        <Button type="submit">Register</Button>
       </form>
     </Form>
   );
