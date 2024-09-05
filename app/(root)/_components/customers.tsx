@@ -3,19 +3,14 @@
 import { Button } from "@/components/ui/button";
 import { Customer } from "@prisma/client";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
 
 interface CustomersProps {
   customers: Customer[];
 }
 export const Customers = ({ customers }: CustomersProps) => {
   const router = useRouter();
-  const [mount, setMount] = useState(false);
 
-  useEffect(() => {
-    router.refresh();
-    setMount(true);
-  }, [mount]);
+  router.refresh();
 
   return (
     <div className="space-y-2">
